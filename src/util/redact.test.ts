@@ -61,6 +61,21 @@ describe("redactBody", () => {
     const result = redactBody(body, 10);
     expect(result).toBe("xxxxxxxxxx…(truncated, totalLen=50)");
   });
+
+  it("redacts context_token values", () => {
+    const body = '{"to":"user1","context_token":"secret123","text":"hello"}';
+    expect(redactBody(body)).toBe('{"to":"user1","context_token":"<redacted>","text":"hello"}');
+  });
+
+  it("redacts bot_token values", () => {
+    const body = '{"bot_token":"abc-xyz-secret"}';
+    expect(redactBody(body)).toBe('{"bot_token":"<redacted>"}');
+  });
+
+  it("redacts token values", () => {
+    const body = '{"token":"my-secret-token"}';
+    expect(redactBody(body)).toBe('{"token":"<redacted>"}');
+  });
 });
 
 describe("redactUrl", () => {
