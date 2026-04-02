@@ -3,3 +3,20 @@
 [简体中文](CHANGELOG.zh_CN.md)
 
 This project follows the [Keep a Changelog](https://keepachangelog.com/) format.
+
+## [2.1.2] - 2026-04-02
+
+### Changed
+
+- **Config reload after login:** On each successful Weixin login, bump `channels.openclaw-weixin.channelConfigUpdatedAt` (ISO 8601) in `openclaw.json` so the gateway reloads config from disk, instead of writing an empty `accounts: {}` placeholder.
+- **QR login:** Increase client timeout for `get_bot_qrcode` from 5s to 10s.
+- **Docs:** Uninstall instructions now use `openclaw plugins uninstall @tencent-weixin/openclaw-weixin` (aligned with the plugins CLI).
+- **Logging:** `debug-check` log line no longer includes `stateDir` / `OPENCLAW_STATE_DIR`.
+
+### Removed
+
+- **`openclaw-weixin` CLI subcommands** (`src/weixin-cli.ts` and registration in `index.ts`). Use the host `openclaw plugins uninstall …` flow instead.
+
+### Fixed
+
+- Resolves the **dangerous code pattern** warning when installing the plugin on **OpenClaw 2026.3.31+** (host plugin install / static checks).
